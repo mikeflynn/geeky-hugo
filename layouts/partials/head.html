@@ -71,3 +71,5 @@
 
 <!-- google analytics -->
 {{ template "_internal/google_analytics.html" . }}
+
+{{ with site.Params.custom_script }}{{ site.Params.custom_script | safeHTML }}{{ end }}
