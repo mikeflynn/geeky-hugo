@@ -58,7 +58,14 @@
     {{ end -}}
   {{ end -}}
   <meta property="og:image:type" content="image/{{ if eq $image_ext `svg` }}svg+xml{{ else }}{{ replaceRE `^jpg$` `jpeg` $image_ext }}{{ end }}">
+{{ else if $image_path}}
+  {{ $image := resources.Get $image_path }}
+  {{ if $image }}
+    <meta property="og:image" content="{{ $image.Permalink | safeHTML }}" />
+    <meta property="og:image:type" content="image/{{ if eq $image_ext `svg` }}svg+xml{{ else }}{{ replaceRE `^jpg$` `jpeg` $image_ext }}{{ end }}">
+  {{ end }}
 {{ end -}}
+
 <meta name="twitter:title" content="{{ with .Title }}{{ . }}{{ else }}{{ site.Title }}{{ end }}"/>
 <meta name="twitter:description" content="{{ with .Description }}{{ . }}{{ else }}{{ if .IsPage }}{{ .Summary }}{{ else }}{{ with site.Params.description }}{{ . }}{{ end }}{{ end }}{{ end }}"/>
 {{ with site.Social.twitter -}}<meta name="twitter:site" content="@{{ . }}"/>{{ end -}}
